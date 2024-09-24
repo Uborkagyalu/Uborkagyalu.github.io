@@ -9,18 +9,26 @@ import {
   deathTrackValues,
   masteryTrackValues,
 } from "./campaignConfigs";
+import { useNavigate, useParams } from "react-router-dom";
 
 function App() {
+  const navigate = useNavigate();
+
+  const urlParams = useParams();
+
   const [tab, setTab] = useState("campaign");
   const [initialState] = useState(
-    localStorage.getItem("RPState")
+    urlParams?.urlState
+      ? JSON.parse(urlParams.urlState)
+      : localStorage.getItem("RPState")
       ? JSON.parse(localStorage.getItem("RPState"))
       : {}
   );
-  console.log(initialState);
 
-  const { campaignState: initialCampaignState = {}, charactersState: initialCharactersState = [] } =
-    initialState;
+  const {
+    campaignState: initialCampaignState = {},
+    charactersState: initialCharactersState = [],
+  } = initialState;
 
   const [campaignState, setCampaignState] = useState({
     campaignTrack: initialCampaignState.campaignTrack ?? campaignTrackValues[0],
@@ -46,29 +54,32 @@ function App() {
 
   return (
     <Paper className="main">
-      <Tabs value={tab} style={{width: "calc(100% - 30px - 2rem"}}>
-        <Tab
-          label="Campaign Sheet"
-          value="campaign"
-          onClick={() => setTab("campaign")}
-        />
-        <Tab
-          label="Characters Sheet"
-          value="characters"
-          onClick={() => setTab("characters")}
-        />
-      </Tabs>
-      <IconButton
-        className="saveIcon"
-        onClick={() => {
-          localStorage.setItem(
-            "RPState",
-            JSON.stringify({ campaignState, charactersState })
-          );
-        }}
-      >
-        <SaveIcon className="icon" />
-      </IconButton>
+      <div className="mainHeader">
+        <Tabs value={tab} className="mainTabs">
+          <Tab
+            label="Campaign Sheet"
+            value="campaign"
+            onClick={() => setTab("campaign")}
+          />
+          <Tab
+            label="Characters Sheet"
+            value="characters"
+            onClick={() => setTab("characters")}
+          />
+        </Tabs>
+        <IconButton
+          className="saveIcon"
+          onClick={() => {
+            localStorage.setItem(
+              "RPState",
+              JSON.stringify({ campaignState, charactersState })
+            );
+            navigate(`/${JSON.stringify({ campaignState, charactersState })}`);
+          }}
+        >
+          <SaveIcon className="icon" />
+        </IconButton>
+      </div>
       {tab === "campaign" && (
         <CampaignSheet state={campaignState} setState={setCampaignState} />
       )}

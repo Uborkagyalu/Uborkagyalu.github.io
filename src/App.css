@@ -12,10 +12,15 @@
   width: 100%;
 }
 
-.saveIcon {
-  position: absolute !important;
-  right: 0;
-  top: 1rem;
+.mainHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.mainTabs {
+  max-width: calc(100% - 50px);
 }
 
 .icon {
@@ -40,6 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .mainSheet > div > div {
@@ -47,6 +53,7 @@
   margin: 0 1rem;
   text-align: left;
   font-weight: bold;
+  max-width: calc(100% - 2rem);
 }
 
 .radioDiv {

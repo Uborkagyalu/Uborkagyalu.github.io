@@ -21,7 +21,7 @@ const TextFieldMulti = ({
           <TextField
             {...params}
             placeholder="type keywords..."
-            sx={{ minWidth: "230px" }}
+            sx={{ minWidth: "150px" }}
           />
         )}
         onChange={(_, value) => setState({ ...state, [stateLabel]: value })}
