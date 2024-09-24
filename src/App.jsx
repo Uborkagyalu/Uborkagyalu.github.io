@@ -9,21 +9,23 @@ import {
   deathTrackValues,
   masteryTrackValues,
 } from "./campaignConfigs";
-import { useNavigate, useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 function App() {
-  const navigate = useNavigate();
-
-  const urlParams = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log("searchParams", searchParams);
+  console.log("searchParams", searchParams.get("urlState"));
 
   const [tab, setTab] = useState("campaign");
   const [initialState] = useState(
-    urlParams?.urlState
-      ? JSON.parse(urlParams.urlState)
+    searchParams.size
+      ? JSON.parse(searchParams.get("urlState"))
       : localStorage.getItem("RPState")
       ? JSON.parse(localStorage.getItem("RPState"))
       : {}
   );
+
+  console.log("initialState", initialState);
 
   const {
     campaignState: initialCampaignState = {},
@@ -74,7 +76,9 @@ function App() {
               "RPState",
               JSON.stringify({ campaignState, charactersState })
             );
-            navigate(`/?${JSON.stringify({ campaignState, charactersState })}`);
+            setSearchParams({
+              urlState: JSON.stringify({ campaignState, charactersState }),
+            });
           }}
         >
           <SaveIcon className="icon" />
