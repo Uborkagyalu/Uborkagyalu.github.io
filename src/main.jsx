@@ -9,11 +9,11 @@ import "./index.css";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/rp",
     element: <App />,
   },
   {
-    path: "/:urlState",
+    path: "/rp/?:urlState",
     element: <App />,
   },
 ]);

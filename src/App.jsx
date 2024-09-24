@@ -74,7 +74,7 @@ function App() {
               "RPState",
               JSON.stringify({ campaignState, charactersState })
             );
-            navigate(`/${JSON.stringify({ campaignState, charactersState })}`);
+            navigate(`/rp/?${JSON.stringify({ campaignState, charactersState })}`);
           }}
         >
           <SaveIcon className="icon" />
